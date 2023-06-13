@@ -11,7 +11,8 @@ const config = {
   reactStrictMode: true,
 
   images : {
-    domains: ['oaidalleapiprodscus.blob.core.windows.net']
+    domains: ['oaidalleapiprodscus.blob.core.windows.net', 
+    "icon-generator-kenny.s3.us-west-1.amazonaws.com"]
   },
 
   /**

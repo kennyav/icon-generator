@@ -72,6 +72,8 @@ export const generateRouter = createTRPCRouter({
 
          const base64EncodedImg = await generateIcon(input.prompt)
 
+         const   BUCKET_NAME = "icon-generator-kenny";
+
          const icon = await ctx.prisma.icon.create({
             data: {
                prompt: input.prompt,
@@ -80,7 +82,7 @@ export const generateRouter = createTRPCRouter({
          });
 
          await s3.putObject({
-            Bucket: "icon-generator-kenny",
+            Bucket: BUCKET_NAME,
             Body: Buffer.from(base64EncodedImg!, "base64"),
             Key: icon.id,
             ContentEncoding: "base64",
@@ -96,7 +98,7 @@ export const generateRouter = createTRPCRouter({
 
 
          return {
-            imageUrl: base64EncodedImg
+            imageUrl: `https://${BUCKET_NAME}.s3.us-west-1.amazonaws.com/${icon.id}`
          }
       })
 });
