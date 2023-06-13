@@ -1,4 +1,16 @@
+import { TRPCError } from "@trpc/server";
 import { z } from "zod";
+import { b64Image } from "~/data/b64";
+import { env } from "~/env.mjs";
+import AWS from "aws-sdk";
+
+const s3 = new AWS.S3({
+   credentials: {
+      accessKeyId: env.ACCESS_KEY_ID,
+      secretAccessKey: env.SECRET_ACCESS_KEY,
+   },
+   region: "us-west-1",
+});
 
 import {
    createTRPCRouter,
@@ -6,16 +18,85 @@ import {
    protectedProcedure,
 } from "~/server/api/trpc";
 
+const { Configuration, OpenAIApi } = require("openai");
+const configuration = new Configuration({
+   apiKey: env.DALLE_API_KEY,
+});
+const openai = new OpenAIApi(configuration);
+
+async function generateIcon(prompt: string): Promise<string | undefined> {
+   if (env.MOCK_DALLE === "true") {
+      //return "https://oaidalleapiprodscus.blob.core.windows.net/private/org-TSaqNe5VyWkHeh1MqjchNczv/user-FvOZOD5HdBZ541msLUNIpYOU/img-DcpbDpNsw2TuxSyOhpCk9ev8.png?st=2023-06-13T02%3A15%3A36Z&se=2023-06-13T04%3A15%3A36Z&sp=r&sv=2021-08-06&sr=b&rscd=inline&rsct=image/png&skoid=6aaadede-4fb3-4698-a8f6-684d7786b067&sktid=a48cca56-e6da-484e-a814-9c849652bcb3&skt=2023-06-12T20%3A39%3A33Z&ske=2023-06-13T20%3A39%3A33Z&sks=b&skv=2021-08-06&sig=loWtlCAtmKh1T2vqBRwZc/AhcgS5vNqycnwtyLgrqrI%3D";
+      return b64Image;
+   } else {
+      const response = await openai.createImage({
+         prompt,
+         n: 1,
+         size: "512x512",
+         response_format: "b64_json",
+      });
+      console.log("-----------------")
+      //console.log(response.data.data[0]?.b64_json)
+      console.log("-----------------")
+      return response.data.data[0]?.b64_json;
+   }
+}
+
 export const generateRouter = createTRPCRouter({
-   generateIcon: publicProcedure.input(
+   generateIcon: protectedProcedure.input(
       z.object({
          prompt: z.string(),
       })
    )
-   .mutation(({ctx, input}) => {
-      console.log("we are here", input)
-      return {
-         message: "success"
-      }
-   })
+      .mutation(async ({ ctx, input }) => {
+         const { count } = await ctx.prisma.user.updateMany({
+            where: {
+               id: ctx.session.user.id,
+               credits: {
+                  gte: 1
+               },
+            },
+            data: {
+               credits: {
+                  decrement: 1
+               }
+            }
+         });
+
+         if (count <= 0) {
+            throw new TRPCError({
+               code: "BAD_REQUEST",
+               message: "You don't have enough credits to generate an icon."
+            });
+         }
+
+         const base64EncodedImg = await generateIcon(input.prompt)
+
+         const icon = await ctx.prisma.icon.create({
+            data: {
+               prompt: input.prompt,
+               userId: ctx.session.user.id,
+            }
+         });
+
+         await s3.putObject({
+            Bucket: "icon-generator-kenny",
+            Body: Buffer.from(base64EncodedImg!, "base64"),
+            Key: icon.id,
+            ContentEncoding: "base64",
+            ContentType: "image/gif",
+         }, (err, data) => {
+            if (err) {
+               console.log(err);
+            } else {
+               console.log(data);
+            }
+         }).promise();
+
+
+
+         return {
+            imageUrl: base64EncodedImg
+         }
+      })
 });
