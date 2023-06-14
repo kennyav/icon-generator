@@ -12,7 +12,7 @@ const config = {
 
   images : {
     domains: ['oaidalleapiprodscus.blob.core.windows.net', 
-    "icon-generator-kenny.s3.us-west-1.amazonaws.com"]
+    'icon-generator-kenny.s3.us-west-1.amazonaws.com',]
   },
 
   /**

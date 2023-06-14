@@ -7,9 +7,13 @@ import FormGroup from "~/component/FormGroup";
 import { Input } from "~/component/Input";
 import { api } from "~/utils/api";
 import Image from "next/image";
+import { useBuyCredits } from "~/hooks/useBuyCredits";
+import { prisma } from "~/server/db";
+
 
 const GeneratePage: NextPage = () => {
 
+   const { buyCredits } = useBuyCredits();
    const [form, setForm] = useState({
       prompt: "",
    });
@@ -48,6 +52,7 @@ const GeneratePage: NextPage = () => {
    const session = useSession();
    const isLoggedIn = !!session.data;
 
+
    return (
       <>
          <Head>
@@ -64,11 +69,17 @@ const GeneratePage: NextPage = () => {
                </Button>
             )}
             {isLoggedIn && (
-               <Button onClick={() => {
-                  signOut().catch(console.error)
-               }}>
-                  Logout
-               </Button>
+               <>
+                  <Button onClick={() => {
+                     buyCredits().catch(console.error);
+                  }}>
+                     Buy Credits
+                  </Button><Button onClick={() => {
+                     signOut().catch(console.error);
+                  }}>
+                     Logout
+                  </Button>
+               </>
             )}
 
             {session.data?.user?.name}
