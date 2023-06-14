@@ -1,5 +1,5 @@
 import { type NextPage } from "next";
-import { signIn, signOut, useSession } from "next-auth/react";
+import { signIn, useSession } from "next-auth/react";
 import Head from "next/head";
 import { useState } from "react";
 import Button from "~/component/Button";
@@ -7,13 +7,9 @@ import FormGroup from "~/component/FormGroup";
 import { Input } from "~/component/Input";
 import { api } from "~/utils/api";
 import Image from "next/image";
-import { useBuyCredits } from "~/hooks/useBuyCredits";
-import { prisma } from "~/server/db";
 
 
 const GeneratePage: NextPage = () => {
-
-   const { buyCredits } = useBuyCredits();
    const [form, setForm] = useState({
       prompt: "",
    });
@@ -62,26 +58,14 @@ const GeneratePage: NextPage = () => {
          </Head>
          <main className="flex min-h-screen flex-col items-center justify-center">
             {!isLoggedIn && (
-               <Button onClick={() => {
-                  signIn().catch(console.error)
-               }}>
+               <Button
+                  varient="primary"
+                  onClick={() => {
+                     signIn().catch(console.error)
+                  }}>
                   Login
                </Button>
             )}
-            {isLoggedIn && (
-               <>
-                  <Button onClick={() => {
-                     buyCredits().catch(console.error);
-                  }}>
-                     Buy Credits
-                  </Button><Button onClick={() => {
-                     signOut().catch(console.error);
-                  }}>
-                     Logout
-                  </Button>
-               </>
-            )}
-
             {session.data?.user?.name}
             <form
                className="flex flex-col gap-4"
@@ -94,7 +78,7 @@ const GeneratePage: NextPage = () => {
                      onChange={updateForm("prompt")
                      } />
                </FormGroup>
-               <Button>Submit</Button>
+               <Button varient="primary">Submit</Button>
             </form>
             <Image
                src={imageUrl}
