@@ -12,7 +12,7 @@ export default function Header() {
    const isLoggedIn = !!session.data;
 
    return (
-      <header className="container mx-auto px-2 shadow-md flex justify-between items-center h-16 dark:bg-gray-800">
+      <header className="container flex mx-auto px-2 shadow-md justify-between items-center h-16 text-gray-700 dark:bg-gray-300 rounded-md">
          <PrimaryLink href={'/'}>Icon Generator</PrimaryLink>
          <ul>
             <li className="ml-5"><PrimaryLink href={"/generate"}>Generate</PrimaryLink></li>
