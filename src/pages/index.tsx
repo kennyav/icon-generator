@@ -8,7 +8,7 @@ function HeroBanner() {
   return <section className="grid grid-cols-1 sm:grid-cols-2 gap-4 p-3 mt-10 mb-10 sm:mt-24 ">
     <div className="flex flex-col gap-4">
       <h1 className="text-5xl font-extrabold tracking-tight text-dark dark:text-white sm:text-[5rem]">
-        Generate <span className="text-[hsl(280,100%,70%)]">Icons</span> with a click of a button
+        Generate <span className="text-[hsl(212,74%,58%)]">Icons</span> with a click of a button
       </h1>
       <p className="text-2xl">Use AI to generate icons in seconds instead of paying a designer and waiting for them to create them for you</p>
       <PrimaryLinkButton href="/generate" className="self-start">Generate your Icons</PrimaryLinkButton>

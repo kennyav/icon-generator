@@ -67,7 +67,7 @@ const GeneratePage: NextPage = () => {
          </Head>
          <main className="container mx-auto mt-24 flex min-h-screen flex-col gap-4 px-4">
             <h1 className="text-5xl font-extrabold tracking-tight text-dark dark:text-white sm:text-[5rem] mr-2">
-               Generate your <span className="text-[hsl(280,100%,70%)]">Icons</span>
+               Generate your <span className="text-[hsl(212,74%,58%)]">Icons</span>
             </h1>
             <p className="text-2xl mb-12">Fill out the forms below to start generating your icons</p>
             <form
