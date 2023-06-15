@@ -17,7 +17,7 @@ import {
    protectedProcedure,
 } from "~/server/api/trpc";
 
-const { Configuration, OpenAIApi } = require("openai");
+import { Configuration, OpenAIApi } from "openai";
 const configuration = new Configuration({
    apiKey: env.DALLE_API_KEY,
 });

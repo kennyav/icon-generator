@@ -34,7 +34,6 @@ const GeneratePage: NextPage = () => {
       style: "",
    });
 
-   const [error, setError] = useState("");
    const [imagesUrl, setImagesUrl] = useState('');
 
    const generateIcon = api.generate.generateIcon.useMutation({
@@ -85,7 +84,7 @@ const GeneratePage: NextPage = () => {
                </FormGroup>
 
 
-               <h2 className="text-xl">Step 2: Pick your icon's background color</h2>
+               <h2 className="text-xl">Step 2: Pick your icon&apos;s background color</h2>
                <FormGroup className="grid grid-cols-4 grid-flow-row gap-4 mb-12">
                   {colors.map(bgColor => (
                      <label key={bgColor} className="flex text-2xl gap-2 cursor-pointer">
@@ -116,7 +115,7 @@ const GeneratePage: NextPage = () => {
                <Button
                   className="mb-12"
                   type="submit"
-                  varient="primary"
+                  variant="primary"
                   disabled={generateIcon.isLoading}
                   isLoading={generateIcon.isLoading}>
                   Submit

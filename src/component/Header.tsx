@@ -50,7 +50,7 @@ export default function Header() {
                      {isLoggedIn && <>
                         <li>
                            <Button
-                              varient="primary"
+                              variant="primary"
                               onClick={() => {
                                  buyCredits().catch(console.error);
                               }}>
@@ -59,8 +59,8 @@ export default function Header() {
                         </li>
                         <li>
                            <Button
-                              varient="secondary"
-                              onClick={() => signOut().catch(console.error)}>
+                              variant="secondary"
+                              onClick={() => void signOut().catch((error) => console.error(error))}>
                               Logout
                            </Button>
                         </li>
@@ -68,8 +68,8 @@ export default function Header() {
                      {!isLoggedIn &&
                         <li>
                            <Button
-                              varient="primary"
-                              onClick={() => signIn().catch(console.error)}>
+                              variant="primary"
+                              onClick={() => void signIn().catch(console.error)}>
                               Login
                            </Button>
                         </li>}
@@ -81,7 +81,7 @@ export default function Header() {
                {isLoggedIn && <>
                   <li>
                      <Button
-                        varient="primary"
+                        variant="primary"
                         onClick={() => {
                            buyCredits().catch(console.error);
                         }}>
@@ -90,8 +90,8 @@ export default function Header() {
                   </li>
                   <li>
                      <Button
-                        varient="secondary"
-                        onClick={() => signOut().catch(console.error)}>
+                        variant="secondary"
+                        onClick={() => void signOut().catch(console.error)}>
                         Logout
                      </Button>
                   </li>
@@ -99,8 +99,8 @@ export default function Header() {
                {!isLoggedIn &&
                   <li>
                      <Button
-                        varient="primary"
-                        onClick={() => signIn().catch(console.error)}>
+                        variant="primary"
+                        onClick={() => void signIn().catch(console.error)}>
                         Login
                      </Button>
                   </li>}

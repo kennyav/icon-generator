@@ -1,5 +1,6 @@
 import clsx from 'clsx'
-import Link, { LinkProps } from 'next/link'
+import type { LinkProps } from 'next/link'
+import Link from 'next/link'
 import React from 'react'
 
 export default function PrimaryLinkButton(props: LinkProps & { children: React.ReactNode; className?: string }) {
