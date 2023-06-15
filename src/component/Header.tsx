@@ -60,7 +60,7 @@ export default function Header() {
                         <li>
                            <Button
                               variant="secondary"
-                              onClick={() => void signOut().catch((error) => console.error(error))}>
+                              onClick={() => signOut().catch((error) => console.error(error))}>
                               Logout
                            </Button>
                         </li>
@@ -69,7 +69,7 @@ export default function Header() {
                         <li>
                            <Button
                               variant="primary"
-                              onClick={() => void signIn().catch(console.error)}>
+                              onClick={() => signIn().catch(console.error)}>
                               Login
                            </Button>
                         </li>}
@@ -91,7 +91,7 @@ export default function Header() {
                   <li>
                      <Button
                         variant="secondary"
-                        onClick={() => void signOut().catch(console.error)}>
+                        onClick={() => signOut().catch(console.error)}>
                         Logout
                      </Button>
                   </li>
@@ -100,7 +100,7 @@ export default function Header() {
                   <li>
                      <Button
                         variant="primary"
-                        onClick={() => void signIn().catch(console.error)}>
+                        onClick={() => signIn().catch(console.error)}>
                         Login
                      </Button>
                   </li>}
