@@ -14,7 +14,6 @@ const s3 = new AWS.S3({
 
 import {
    createTRPCRouter,
-   publicProcedure,
    protectedProcedure,
 } from "~/server/api/trpc";
 
@@ -35,9 +34,6 @@ async function generateIcon(prompt: string): Promise<string | undefined> {
          size: "512x512",
          response_format: "b64_json",
       });
-      console.log("-----------------")
-      //console.log(response.data.data[0]?.b64_json)
-      console.log("-----------------")
       return response.data.data[0]?.b64_json;
    }
 }
@@ -46,6 +42,8 @@ export const generateRouter = createTRPCRouter({
    generateIcon: protectedProcedure.input(
       z.object({
          prompt: z.string(),
+         bgColor: z.string(),
+         style: z.string(),
       })
    )
       .mutation(async ({ ctx, input }) => {
@@ -70,13 +68,23 @@ export const generateRouter = createTRPCRouter({
             });
          }
 
-         const base64EncodedImg = await generateIcon(input.prompt)
+         let finalPrompt = "";
+         if (input.style === "metallic") {
+            finalPrompt = `an icon of ${input.prompt} in light blue metallic iridescent material, 3D render isometric perspective on dark ${input.bgColor} background`
+         } else if (input.style === "monochromatic") {
+            finalPrompt = `${input.prompt} 3d character in flat monochromatic colors with matching single ${input.bgColor} color background`
+         }
 
-         const   BUCKET_NAME = "icon-generator-kenny";
+         console.log(finalPrompt);
+
+
+         const base64EncodedImg = await generateIcon(finalPrompt)
+
+         const BUCKET_NAME = "icon-generator-kenny";
 
          const icon = await ctx.prisma.icon.create({
             data: {
-               prompt: input.prompt,
+               prompt: finalPrompt,
                userId: ctx.session.user.id,
             }
          });
@@ -102,3 +110,4 @@ export const generateRouter = createTRPCRouter({
          }
       })
 });
+
