@@ -70,7 +70,7 @@ const GeneratePage: NextPage = () => {
             </h1>
             <p className="text-2xl mb-12">Fill out the forms below to start generating your icons</p>
             <form
-               className="flex flex-col gap-4"
+               className="flex flex-col gap-4 mb-12"
                onSubmit={handleFormSubmit}
             >
                <h2 className="text-xl">Step 1: Describe your icon</h2>
@@ -98,7 +98,7 @@ const GeneratePage: NextPage = () => {
                </FormGroup>
 
                <h2 className="text-xl">Step 3: Select your style</h2>
-               <FormGroup className="grid grid-cols-4 grid-flow-row gap-4 mb-12">
+               <FormGroup className="grid grid-cols-1 grid-flow-row gap-4 mb-12">
                   {styles.map(style => (
                      <label key={style} className="flex text-2xl gap-2 cursor-pointer">
                         <input
@@ -112,7 +112,6 @@ const GeneratePage: NextPage = () => {
                </FormGroup>
 
                <Button
-                  className="mb-12"
                   type="submit"
                   variant="primary"
                   disabled={generateIcon.isLoading}

@@ -3,12 +3,15 @@ import PrimaryLink from './PrimaryLink'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import Button from './Button';
 import { useBuyCredits } from '~/hooks/useBuyCredits';
-import { prisma } from "~/server/db";
+import { api } from "~/utils/api";
 
 export default function Header() {
 
    const [isNavOpen, setIsNavOpen] = useState(false);
    const { buyCredits } = useBuyCredits();
+   const credits = api.user.getCredits.useQuery();
+
+
    const session = useSession();
    const isLoggedIn = !!session.data;
 
@@ -50,9 +53,7 @@ export default function Header() {
                   </div>
                   <ul className="flex flex-col items-center justify-between gap-4 align-left">
                      {isLoggedIn && <>
-                        <li>
-                           <Button>Credits</Button>
-                        </li>
+                        <p className="text-gray-700">Credits Remaining: {credits.data}</p>
                         <li>
                            <Button
                               variant="primary"
@@ -84,6 +85,9 @@ export default function Header() {
 
             <ul className="DESKTOP-MENU hidden space-x-8 lg:flex">
                {isLoggedIn && <>
+                  <div className="flex justify-center items-center">
+                     <p className="text-gray-700">Credits Remaining: {credits.data}</p>
+                  </div>
                   <li>
                      <Button
                         variant="primary"
