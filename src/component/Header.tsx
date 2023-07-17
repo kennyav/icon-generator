@@ -3,6 +3,7 @@ import PrimaryLink from './PrimaryLink'
 import { signIn, signOut, useSession } from 'next-auth/react'
 import Button from './Button';
 import { useBuyCredits } from '~/hooks/useBuyCredits';
+import { prisma } from "~/server/db";
 
 export default function Header() {
 
@@ -14,8 +15,9 @@ export default function Header() {
    return (
       <header className="container flex mx-auto px-2 shadow-md justify-between items-center h-16 text-gray-700 dark:bg-gray-300 rounded-md">
          <PrimaryLink href={'/'}>Icon Generator</PrimaryLink>
-         <ul>
+         <ul className="flex justify-between">
             <li className="ml-5"><PrimaryLink href={"/generate"}>Generate</PrimaryLink></li>
+            {isLoggedIn && <li className="ml-5"><PrimaryLink href={"/collection"}>Collection</PrimaryLink></li>}
          </ul>
          <nav>
             <section className="MOBILE-MENU flex lg:hidden">
@@ -48,6 +50,9 @@ export default function Header() {
                   </div>
                   <ul className="flex flex-col items-center justify-between gap-4 align-left">
                      {isLoggedIn && <>
+                        <li>
+                           <Button>Credits</Button>
+                        </li>
                         <li>
                            <Button
                               variant="primary"

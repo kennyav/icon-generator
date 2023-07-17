@@ -79,8 +79,7 @@ const GeneratePage: NextPage = () => {
                   <label>Prompt</label>
                   <Input
                      value={form.prompt}
-                     onChange={updateForm("prompt")
-                     } />
+                     onChange={updateForm("prompt")} />
                </FormGroup>
 
 
