@@ -49,7 +49,7 @@ const webhook = async (req: NextApiRequest, res: NextApiResponse) => {
                },
                data: {
                   credits: {
-                     increment: 100,
+                     increment: 5,
                   },
                },
             });
