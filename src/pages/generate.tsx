@@ -37,11 +37,22 @@ const GeneratePage: NextPage = () => {
    const [imagesUrl, setImagesUrl] = useState('');
 
    const generateIcon = api.generate.generateIcon.useMutation({
+      // onSuccess(data) {
+      //    if (!data.imageUrl) return;
+      //    setImagesUrl(data.imageUrl);
+      // }
       onSuccess(data) {
-         if (!data.imageUrl) return;
          setImagesUrl(data.imageUrl);
-      }
-   });
+       },
+       onError(error) {
+         console.log(error.message)
+         if (error.message === "UNAUTHORIZED"){
+            alert("You need to be signed in to sumbit an icon request")
+         } else {
+            alert("You do not have any credits remaining")
+         }
+       },
+     });
 
    function handleFormSubmit(e: React.FormEvent) {
       e.preventDefault();
@@ -84,7 +95,7 @@ const GeneratePage: NextPage = () => {
 
 
                <h2 className="text-xl">Step 2: Pick your icon&apos;s background color</h2>
-               <FormGroup className="grid grid-cols-4 grid-flow-row gap-4 mb-12">
+               <FormGroup className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 grid-flow-row gap-4 mb-12">
                   {colors.map(bgColor => (
                      <label key={bgColor} className="flex text-2xl gap-2 cursor-pointer">
                         <input
