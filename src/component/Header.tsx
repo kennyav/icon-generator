@@ -20,6 +20,7 @@ export default function Header() {
          <PrimaryLink href={'/'}>Icon Generator</PrimaryLink>
          <ul className="flex justify-between">
             <li className="ml-5"><PrimaryLink href={"/generate"}>Generate</PrimaryLink></li>
+            <li className="ml-5"><PrimaryLink href={"/generatePixar"}>Generate Disney Pixar</PrimaryLink></li>
             {isLoggedIn && <li className="ml-5"><PrimaryLink href={"/collection"}>Collection</PrimaryLink></li>}
          </ul>
          <nav>

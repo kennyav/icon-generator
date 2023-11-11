@@ -1,5 +1,6 @@
 import { createTRPCRouter } from "~/server/api/trpc";
 import { generateRouter } from "~/server/api/routers/generate";
+import { generatePixarRouter } from "~/server/api/routers/generatePixar";
 import { checkoutRouter } from "~/server/api/routers/checkout";
 import { iconsRouter } from "~/server/api/routers/icons";
 import { userRouter } from "~/server/api/routers/user";
@@ -12,6 +13,7 @@ import { userRouter } from "~/server/api/routers/user";
 export const appRouter = createTRPCRouter({
   user: userRouter,
   generate: generateRouter,
+  generatePixar: generatePixarRouter,
   checkout: checkoutRouter,
   icons: iconsRouter
 });
