@@ -76,7 +76,7 @@ export const generatePixarRouter = createTRPCRouter({
             });
             return description
          }
-         let finalPrompt = `Disney pixar movie with the title ${input.title}, at the top of the poster, about a ${personDescription} at ${input.location}. 3D image`;
+         const finalPrompt = `Disney pixar movie with the title ${input.title}, at the top of the poster, about a ${personDescription()} at ${input.location}. 3D image`;
          console.log(finalPrompt)
 
          const base64EncodedImg = await generateIcon(finalPrompt)
